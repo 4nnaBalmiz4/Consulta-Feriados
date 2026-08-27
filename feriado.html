@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Feriados</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Feriados do ano</h1>
+
+    <input type="number" id="ano" placeholder="Digite o ano">
+    <button onclick="buscarFeriados()">Buscar</button>
+
+    <ul id="lista"></ul>
+
+    <script>
+        async function buscarFeriados() {
+            const ano = document.getElementById("ano").value;
+            const lista = document.getElementById("lista");
+
+            const resposta = await fetch(
+                `https://brasilapi.com.br/api/feriados/v1/${ano}`
+            );
+
+            const feriados = await resposta.json();
+
+            lista.innerHTML = "";
+
+            feriados.forEach(feriado => {
+                lista.innerHTML += `
+                    <li>
+                        ${feriado.date} - ${feriado.name}
+                    </li>
+                `;
+            });
+        }
+    </script>
+
+</body>
+</html>
